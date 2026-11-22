@@ -40,17 +40,14 @@ export default function MyBox() {
             exit={{ x: isRtl ? '-100%' : '100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             dir={isRtl ? 'rtl' : 'ltr'}
-            className={`fixed top-0 ${isRtl ? 'left-0' : 'right-0'} w-full max-w-md h-full z-50 flex flex-col border-${
-              isRtl ? 'r' : 'l'
-            } transition-colors duration-300 ${
-              isDark ? 'bg-[#18191F] border-white/5' : 'bg-white border-gray-200 shadow-2xl'
-            }`}
+            className={`fixed top-0 ${isRtl ? 'left-0' : 'right-0'} w-full max-w-md h-full z-50 flex flex-col border-${isRtl ? 'r' : 'l'
+              } transition-colors duration-300 ${isDark ? 'bg-[#18191F] border-white/5' : 'bg-white border-gray-200 shadow-2xl'
+              }`}
           >
             {/* Header */}
             <div
-              className={`flex items-center justify-between p-5 border-b transition-colors ${
-                isDark ? 'border-white/5' : 'border-gray-100'
-              }`}
+              className={`flex items-center justify-between p-5 border-b transition-colors ${isDark ? 'border-white/5' : 'border-gray-100'
+                }`}
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gradient-to-br from-[#F34D83] to-[#D92968] rounded-xl flex items-center justify-center shadow-md">
@@ -67,11 +64,10 @@ export default function MyBox() {
               </div>
               <button
                 onClick={() => setBoxOpen(false)}
-                className={`p-2 rounded-lg transition-colors ${
-                  isDark
+                className={`p-2 rounded-lg transition-colors ${isDark
                     ? 'text-[#A5A5AD] hover:text-white hover:bg-white/5'
                     : 'text-gray-400 hover:text-gray-900 hover:bg-gray-100'
-                }`}
+                  }`}
               >
                 <X size={20} />
               </button>
@@ -79,9 +75,8 @@ export default function MyBox() {
 
             {/* Capacity bar */}
             <div
-              className={`px-5 py-3 border-b transition-colors ${
-                isDark ? 'border-white/5' : 'border-gray-100'
-              }`}
+              className={`px-5 py-3 border-b transition-colors ${isDark ? 'border-white/5' : 'border-gray-100'
+                }`}
             >
               <BoxCapacityBar />
             </div>
@@ -92,9 +87,8 @@ export default function MyBox() {
                 <div className="flex flex-col items-center justify-center h-full text-center">
                   <ShoppingBag
                     size={48}
-                    className={`mb-4 transition-colors ${
-                      isDark ? 'text-[#A5A5AD]/30' : 'text-gray-300'
-                    }`}
+                    className={`mb-4 transition-colors ${isDark ? 'text-[#A5A5AD]/30' : 'text-gray-300'
+                      }`}
                   />
                   <h4 className={`font-semibold mb-2 transition-colors ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     {t('boxEmpty')}
@@ -111,17 +105,15 @@ export default function MyBox() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, x: 100 }}
-                    className={`flex gap-3 rounded-xl p-3 border transition-colors ${
-                      isDark
+                    className={`flex gap-3 rounded-xl p-3 border transition-colors ${isDark
                         ? 'bg-white/5 border-white/5'
                         : 'bg-gray-50/90 border-gray-200/80 shadow-2xs'
-                    }`}
+                      }`}
                   >
                     {/* Thumbnail */}
                     <div
-                      className={`w-16 h-16 rounded-lg flex-shrink-0 p-1.5 transition-colors ${
-                        isDark ? 'bg-[#101114]' : 'bg-white border border-gray-100'
-                      }`}
+                      className={`w-16 h-16 rounded-lg flex-shrink-0 p-1.5 transition-colors ${isDark ? 'bg-[#101114]' : 'bg-white border border-gray-100'
+                        }`}
                     >
                       <img
                         src={item.product.image}
@@ -133,9 +125,8 @@ export default function MyBox() {
                     {/* Details */}
                     <div className="flex-1 min-w-0">
                       <h4
-                        className={`text-sm font-medium truncate transition-colors ${
-                          isDark ? 'text-white' : 'text-gray-900'
-                        }`}
+                        className={`text-sm font-medium truncate transition-colors ${isDark ? 'text-white' : 'text-gray-900'
+                          }`}
                       >
                         {language === 'ar' ? item.product.nameAr : item.product.name}
                       </h4>
@@ -148,28 +139,25 @@ export default function MyBox() {
                         <div className="flex items-center gap-1">
                           <button
                             onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                            className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
-                              isDark
+                            className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${isDark
                                 ? 'bg-white/5 text-[#A5A5AD] hover:text-white hover:bg-white/10'
                                 : 'bg-gray-200 text-gray-700 hover:text-black hover:bg-gray-300'
-                            }`}
+                              }`}
                           >
                             <Minus size={12} />
                           </button>
                           <span
-                            className={`text-sm w-8 text-center font-bold transition-colors ${
-                              isDark ? 'text-white' : 'text-gray-900'
-                            }`}
+                            className={`text-sm w-8 text-center font-bold transition-colors ${isDark ? 'text-white' : 'text-gray-900'
+                              }`}
                           >
                             {item.quantity}
                           </span>
                           <button
                             onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                            className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
-                              isDark
+                            className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${isDark
                                 ? 'bg-white/5 text-[#A5A5AD] hover:text-white hover:bg-white/10'
                                 : 'bg-gray-200 text-gray-700 hover:text-black hover:bg-gray-300'
-                            }`}
+                              }`}
                           >
                             <Plus size={12} />
                           </button>
@@ -188,9 +176,8 @@ export default function MyBox() {
                     {/* Item total */}
                     <div className="text-right flex-shrink-0">
                       <span
-                        className={`text-sm font-bold transition-colors ${
-                          isDark ? 'text-white' : 'text-gray-900'
-                        }`}
+                        className={`text-sm font-bold transition-colors ${isDark ? 'text-white' : 'text-gray-900'
+                          }`}
                       >
                         {item.product.price * item.quantity}
                       </span>
@@ -206,9 +193,8 @@ export default function MyBox() {
             {/* Footer */}
             {items.length > 0 && (
               <div
-                className={`p-5 border-t space-y-4 transition-colors ${
-                  isDark ? 'border-white/5' : 'border-gray-100'
-                }`}
+                className={`p-5 border-t space-y-4 transition-colors ${isDark ? 'border-white/5' : 'border-gray-100'
+                  }`}
               >
                 {/* Total */}
                 <div className="flex items-center justify-between">
@@ -216,9 +202,8 @@ export default function MyBox() {
                     {t('total')}
                   </span>
                   <span
-                    className={`text-xl font-black transition-colors ${
-                      isDark ? 'text-white' : 'text-gray-950'
-                    }`}
+                    className={`text-xl font-black transition-colors ${isDark ? 'text-white' : 'text-gray-950'
+                      }`}
                   >
                     {totalPrice()}{' '}
                     <span className={`text-sm ${isDark ? 'text-[#A5A5AD]' : 'text-gray-500'}`}>
@@ -243,11 +228,10 @@ export default function MyBox() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => setBoxOpen(false)}
-                      className={`flex-1 py-2.5 rounded-xl text-sm font-medium border transition-all ${
-                        isDark
+                      className={`flex-1 py-2.5 rounded-xl text-sm font-medium border transition-all ${isDark
                           ? 'text-[#A5A5AD] hover:text-white border-white/10 hover:border-white/20'
                           : 'text-gray-700 hover:text-black border-gray-300 hover:border-gray-400'
-                      }`}
+                        }`}
                     >
                       {t('continueShopping')}
                     </button>

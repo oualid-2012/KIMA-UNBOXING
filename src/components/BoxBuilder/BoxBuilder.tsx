@@ -59,9 +59,8 @@ export default function BoxBuilder() {
     >
       <section
         id="shop"
-        className={`py-12 md:py-20 transition-colors duration-300 ${
-          isDark ? 'bg-[#101114]' : 'bg-[#FAF9F6]'
-        }`}
+        className={`py-12 md:py-20 transition-colors duration-300 ${isDark ? 'bg-[#101114]' : 'bg-[#FAF9F6]'
+          }`}
         dir={isRtl ? 'rtl' : 'ltr'}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,9 +72,8 @@ export default function BoxBuilder() {
             className="text-center mb-12"
           >
             <h2
-              className={`text-3xl sm:text-4xl font-black mb-4 transition-colors ${
-                isDark ? 'text-white' : 'text-gray-950'
-              }`}
+              className={`text-3xl sm:text-4xl font-black mb-4 transition-colors ${isDark ? 'text-white' : 'text-gray-950'
+                }`}
             >
               {t('buildYourBox')}
             </h2>
@@ -103,9 +101,8 @@ export default function BoxBuilder() {
                     fallback={
                       <div className="w-full h-[400px] flex items-center justify-center">
                         <div
-                          className={`flex flex-col items-center gap-3 ${
-                            isDark ? 'text-[#A5A5AD]' : 'text-gray-500'
-                          }`}
+                          className={`flex flex-col items-center gap-3 ${isDark ? 'text-[#A5A5AD]' : 'text-gray-500'
+                            }`}
                         >
                           <Box size={40} className="text-[#F34D83] animate-pulse" />
                           <span className="text-sm font-medium">Loading 3D Box...</span>
@@ -119,23 +116,20 @@ export default function BoxBuilder() {
 
                 {/* Box stats */}
                 <div
-                  className={`border rounded-2xl p-5 space-y-4 transition-colors duration-300 ${
-                    isDark
+                  className={`border rounded-2xl p-5 space-y-4 transition-colors duration-300 ${isDark
                       ? 'bg-[#18191F] border-white/5'
                       : 'bg-white border-gray-200/90 shadow-md'
-                  }`}
+                    }`}
                 >
                   <BoxCapacityBar />
 
                   <div
-                    className={`flex items-center justify-between pt-2 border-t transition-colors ${
-                      isDark ? 'border-white/5' : 'border-gray-100'
-                    }`}
+                    className={`flex items-center justify-between pt-2 border-t transition-colors ${isDark ? 'border-white/5' : 'border-gray-100'
+                      }`}
                   >
                     <div
-                      className={`flex items-center gap-2 text-sm transition-colors ${
-                        isDark ? 'text-[#A5A5AD]' : 'text-gray-600'
-                      }`}
+                      className={`flex items-center gap-2 text-sm transition-colors ${isDark ? 'text-[#A5A5AD]' : 'text-gray-600'
+                        }`}
                     >
                       <Package size={16} />
                       <span>
@@ -143,9 +137,8 @@ export default function BoxBuilder() {
                       </span>
                     </div>
                     <span
-                      className={`font-bold text-lg transition-colors ${
-                        isDark ? 'text-white' : 'text-gray-950'
-                      }`}
+                      className={`font-bold text-lg transition-colors ${isDark ? 'text-white' : 'text-gray-950'
+                        }`}
                     >
                       {totalPrice()}{' '}
                       <span className={`text-xs ${isDark ? 'text-[#A5A5AD]' : 'text-gray-500'}`}>
@@ -164,9 +157,8 @@ export default function BoxBuilder() {
       <DragOverlay>
         {activeDragProduct && (
           <div
-            className={`w-24 h-24 border-2 border-[#F34D83] rounded-xl p-2 shadow-2xl shadow-[#F34D83]/30 opacity-90 rotate-6 ${
-              isDark ? 'bg-[#18191F]' : 'bg-white'
-            }`}
+            className={`w-24 h-24 border-2 border-[#F34D83] rounded-xl p-2 shadow-2xl shadow-[#F34D83]/30 opacity-90 rotate-6 ${isDark ? 'bg-[#18191F]' : 'bg-white'
+              }`}
           >
             <img
               src={activeDragProduct.image}
@@ -198,13 +190,12 @@ function DropZone({
   return (
     <div
       ref={setNodeRef}
-      className={`relative border-2 rounded-2xl overflow-hidden transition-all duration-500 ${
-        isDraggingOver
+      className={`relative border-2 rounded-2xl overflow-hidden transition-all duration-500 ${isDraggingOver
           ? 'border-[#F34D83] shadow-xl shadow-[#F34D83]/20'
           : isDark
-          ? 'bg-[#18191F] border-white/5'
-          : 'bg-white border-gray-200/90 shadow-md'
-      }`}
+            ? 'bg-[#18191F] border-white/5'
+            : 'bg-white border-gray-200/90 shadow-md'
+        }`}
     >
       {children}
       {isDraggingOver && (

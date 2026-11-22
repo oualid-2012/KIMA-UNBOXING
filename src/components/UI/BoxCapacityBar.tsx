@@ -34,9 +34,8 @@ export default function BoxCapacityBar() {
         </span>
       </div>
       <div
-        className={`h-2.5 rounded-full overflow-hidden transition-colors ${
-          isDark ? 'bg-white/10' : 'bg-gray-200'
-        }`}
+        className={`h-2.5 rounded-full overflow-hidden transition-colors ${isDark ? 'bg-white/10' : 'bg-gray-200'
+          }`}
       >
         <motion.div
           className={`h-full rounded-full bg-gradient-to-r ${getColor()}`}
