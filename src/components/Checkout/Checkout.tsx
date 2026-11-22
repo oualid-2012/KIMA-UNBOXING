@@ -1,8 +1,20 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, CheckCircle, MapPin, Phone, User, FileText, Truck } from 'lucide-react';
+import {
+  X,
+  ChevronLeft,
+  CheckCircle,
+  MapPin,
+  Phone,
+  User,
+  FileText,
+  Truck,
+  Loader2,
+  Table,
+} from 'lucide-react';
 import { useBoxStore } from '../../store/boxStore';
 import { useTranslation } from '../../hooks/useTranslation';
+import { sendOrderToGoogleSheet } from '../../services/googleSheetService';
 
 export default function Checkout() {
   const {
@@ -21,6 +33,7 @@ export default function Checkout() {
   } = useBoxStore();
   const { t, isRtl, language } = useTranslation();
   const [step, setStep] = useState<'info' | 'review'>('info');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const summary = orderSummary();
   const isDark = theme === 'dark';
 
@@ -29,6 +42,47 @@ export default function Checkout() {
     checkoutForm.phone.trim().length > 7 &&
     checkoutForm.city.trim().length > 1 &&
     checkoutForm.address.trim().length > 5;
+
+  const handleConfirmOrder = async () => {
+    setIsSubmitting(true);
+    try {
+      const now = new Date();
+      const dateFormatted = now.toLocaleString(language === 'ar' ? 'ar-MA' : 'fr-FR', {
+        timeZone: 'Africa/Casablanca',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+
+      const productsSummary = items
+        .map((item) => {
+          const name = language === 'ar' ? item.product.nameAr : item.product.name;
+          return `${name} (×${item.quantity}) - ${item.product.price * item.quantity} MAD`;
+        })
+        .join(' | ');
+
+      await sendOrderToGoogleSheet({
+        date: dateFormatted,
+        fullName: checkoutForm.fullName,
+        phone: checkoutForm.phone,
+        city: checkoutForm.city,
+        address: checkoutForm.address,
+        notes: checkoutForm.notes || '-',
+        products: productsSummary,
+        itemCount: totalItems(),
+        subtotal: summary.subtotal,
+        deliveryFee: summary.deliveryFee,
+        total: summary.total,
+      });
+    } catch (err) {
+      console.error('Erreur transmission Google Sheets:', err);
+    } finally {
+      setIsSubmitting(false);
+      confirmOrder();
+    }
+  };
 
   if (!isCheckoutOpen) return null;
 
@@ -106,9 +160,26 @@ export default function Checkout() {
                 <h3 className={`text-2xl font-black mb-3 ${isDark ? 'text-white' : 'text-gray-950'}`}>
                   {t('orderConfirmed')}
                 </h3>
-                <p className={`max-w-sm mb-8 ${isDark ? 'text-[#A5A5AD]' : 'text-gray-600'}`}>
+                <p className={`max-w-sm mb-4 ${isDark ? 'text-[#A5A5AD]' : 'text-gray-600'}`}>
                   {t('orderConfirmedMsg')}
                 </p>
+
+                {/* Google Sheet Sync Confirmation Badge */}
+                <div
+                  className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-8 border ${
+                    isDark
+                      ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                      : 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                  }`}
+                >
+                  <Table size={13} />
+                  <span>
+                    {language === 'ar'
+                      ? 'تم إرسال الطلب وحفظه في Google Sheet بنجاح'
+                      : 'Commande enregistrée dans Google Sheets'}
+                  </span>
+                </div>
+
                 <button
                   onClick={() => {
                     resetOrder();
@@ -344,10 +415,22 @@ export default function Checkout() {
                 </button>
               ) : (
                 <button
-                  onClick={confirmOrder}
-                  className="w-full py-3.5 bg-gradient-to-r from-[#F34D83] to-[#D92968] text-white rounded-xl font-bold text-sm hover:shadow-lg hover:shadow-[#F34D83]/30 transition-all"
+                  onClick={handleConfirmOrder}
+                  disabled={isSubmitting}
+                  className="w-full py-3.5 bg-gradient-to-r from-[#F34D83] to-[#D92968] text-white rounded-xl font-bold text-sm hover:shadow-lg hover:shadow-[#F34D83]/30 transition-all flex items-center justify-center gap-2 disabled:opacity-75 disabled:cursor-not-allowed"
                 >
-                  {t('confirmOrder')} — {summary.total} {t('mad')}
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" />
+                      <span>
+                        {language === 'ar' ? 'جاري تسجيل الطلب...' : 'Envoi vers Google Sheets...'}
+                      </span>
+                    </>
+                  ) : (
+                    <span>
+                      {t('confirmOrder')} — {summary.total} {t('mad')}
+                    </span>
+                  )}
                 </button>
               )}
             </div>
