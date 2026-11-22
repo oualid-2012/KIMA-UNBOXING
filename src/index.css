@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #101114;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2b33;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #F34D83;
+}
+
+/* Hide horizontal scrollbar for categories */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Canvas styling */
+canvas {
+  touch-action: none;
+}
+
+/* Prevent text selection on drag */
+[data-dnd-draggable] {
+  user-select: none;
+}
+
+/* Font */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #101114;
+  color: #ffffff;
+}
