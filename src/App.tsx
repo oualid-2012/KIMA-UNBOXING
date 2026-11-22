@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import BoxBuilder from './components/BoxBuilder/BoxBuilder';
@@ -10,11 +11,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag } from 'lucide-react';
 
 export default function App() {
-  const { isBoxOpen, toggleBox, totalItems, isBoxFull } = useBoxStore();
+  const { toggleBox, totalItems, isBoxFull, theme } = useBoxStore();
   const count = totalItems();
+  const isDark = theme === 'dark';
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
   return (
-    <div className="bg-[#101114] min-h-screen text-white antialiased selection:bg-[#F34D83]/30 selection:text-white">
+    <div
+      className={`${
+        isDark ? 'bg-[#101114] text-white' : 'bg-[#FAF9F6] text-gray-900'
+      } min-h-screen antialiased selection:bg-[#F34D83]/30 selection:text-white transition-colors duration-300`}
+    >
       <Navbar />
       <Hero />
       <BoxBuilder />
@@ -37,7 +48,7 @@ export default function App() {
           <ShoppingBag size={18} />
           <span>Ma Box</span>
           {count > 0 && (
-            <span className="absolute -top-2 -right-2 bg-white text-[#D92968] text-xs font-black w-6 h-6 rounded-full flex items-center justify-center">
+            <span className="absolute -top-2 -right-2 bg-white text-[#D92968] text-xs font-black w-6 h-6 rounded-full flex items-center justify-center shadow-md">
               {count}
             </span>
           )}

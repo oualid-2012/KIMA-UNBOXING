@@ -34,6 +34,7 @@ export interface CategoryOption {
 }
 
 export type Language = 'fr' | 'ar';
+export type Theme = 'dark' | 'light';
 
 export interface CheckoutFormData {
   fullName: string;

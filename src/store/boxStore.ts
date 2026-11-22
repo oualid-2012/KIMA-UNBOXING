@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { BoxItem, Product, Language, CheckoutFormData } from '../types';
+import type { BoxItem, Product, Language, CheckoutFormData, Theme } from '../types';
 import { BOX_MAX_CAPACITY, DELIVERY_FEE } from '../data/products';
 
 interface BoxStore {
   // Box items
   items: BoxItem[];
   language: Language;
+  theme: Theme;
   isBoxOpen: boolean;
   isCheckoutOpen: boolean;
   activeCategory: string;
@@ -28,6 +29,8 @@ interface BoxStore {
   updateQuantity: (productId: string, quantity: number) => void;
   clearBox: () => void;
   setLanguage: (lang: Language) => void;
+  toggleTheme: () => void;
+  setTheme: (theme: Theme) => void;
   toggleBox: () => void;
   setBoxOpen: (open: boolean) => void;
   setCheckoutOpen: (open: boolean) => void;
@@ -43,6 +46,7 @@ export const useBoxStore = create<BoxStore>()(
     (set, get) => ({
       items: [],
       language: 'fr',
+      theme: 'dark',
       isBoxOpen: false,
       isCheckoutOpen: false,
       activeCategory: 'all',
@@ -122,6 +126,21 @@ export const useBoxStore = create<BoxStore>()(
       clearBox: () => set({ items: [] }),
 
       setLanguage: (language) => set({ language }),
+      toggleTheme: () => {
+        const nextTheme = get().theme === 'dark' ? 'light' : 'dark';
+        if (typeof document !== 'undefined') {
+          document.documentElement.classList.toggle('dark', nextTheme === 'dark');
+          document.documentElement.setAttribute('data-theme', nextTheme);
+        }
+        set({ theme: nextTheme });
+      },
+      setTheme: (theme: Theme) => {
+        if (typeof document !== 'undefined') {
+          document.documentElement.classList.toggle('dark', theme === 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+        }
+        set({ theme });
+      },
       toggleBox: () => set({ isBoxOpen: !get().isBoxOpen }),
       setBoxOpen: (isBoxOpen) => set({ isBoxOpen }),
       setCheckoutOpen: (isCheckoutOpen) => set({ isCheckoutOpen }),
@@ -149,6 +168,7 @@ export const useBoxStore = create<BoxStore>()(
       partialize: (state) => ({
         items: state.items,
         language: state.language,
+        theme: state.theme,
       }),
     }
   )

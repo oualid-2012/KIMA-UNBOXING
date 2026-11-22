@@ -3,9 +3,10 @@ import { useBoxStore } from '../../store/boxStore';
 import { useTranslation } from '../../hooks/useTranslation';
 
 export default function BoxCapacityBar() {
-  const { capacityPercentage } = useBoxStore();
+  const { capacityPercentage, theme } = useBoxStore();
   const { t } = useTranslation();
   const pct = capacityPercentage();
+  const isDark = theme === 'dark';
 
   const getLabel = () => {
     if (pct === 0) return t('empty');
@@ -25,10 +26,18 @@ export default function BoxCapacityBar() {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between text-xs">
-        <span className="text-[#A5A5AD]">{t('boxCapacity')}</span>
-        <span className="text-white font-semibold">{getLabel()} — {Math.round(pct)}%</span>
+        <span className={`transition-colors font-medium ${isDark ? 'text-[#A5A5AD]' : 'text-gray-600'}`}>
+          {t('boxCapacity')}
+        </span>
+        <span className={`font-bold transition-colors ${isDark ? 'text-white' : 'text-gray-950'}`}>
+          {getLabel()} — {Math.round(pct)}%
+        </span>
       </div>
-      <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+      <div
+        className={`h-2.5 rounded-full overflow-hidden transition-colors ${
+          isDark ? 'bg-white/10' : 'bg-gray-200'
+        }`}
+      >
         <motion.div
           className={`h-full rounded-full bg-gradient-to-r ${getColor()}`}
           initial={{ width: 0 }}

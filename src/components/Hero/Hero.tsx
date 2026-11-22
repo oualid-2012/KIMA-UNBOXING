@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion';
 import { ArrowDown, Sparkles } from 'lucide-react';
 import { useTranslation } from '../../hooks/useTranslation';
+import { useBoxStore } from '../../store/boxStore';
 
 export default function Hero() {
   const { t, isRtl } = useTranslation();
+  const { theme } = useBoxStore();
+  const isDark = theme === 'dark';
 
   const floatingProducts = [
     { src: '/Produit 1.png', x: -280, y: -60, delay: 0, size: 90 },
@@ -17,13 +20,23 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#101114] pt-20"
+      className={`relative min-h-screen flex items-center justify-center overflow-hidden pt-20 transition-colors duration-300 ${
+        isDark ? 'bg-[#101114]' : 'bg-[#FAF9F6]'
+      }`}
       dir={isRtl ? 'rtl' : 'ltr'}
     >
       {/* Gradient orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#F34D83]/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#D92968]/10 rounded-full blur-[120px]" />
+        <div
+          className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-[120px] transition-opacity duration-500 ${
+            isDark ? 'bg-[#F34D83]/10' : 'bg-[#F34D83]/15'
+          }`}
+        />
+        <div
+          className={`absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full blur-[120px] transition-opacity duration-500 ${
+            isDark ? 'bg-[#D92968]/10' : 'bg-[#D92968]/15'
+          }`}
+        />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -39,35 +52,47 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-6"
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6 border transition-colors ${
+                isDark
+                  ? 'bg-white/5 border-white/10 text-[#A5A5AD]'
+                  : 'bg-pink-50 border-pink-200/80 text-pink-700'
+              }`}
             >
               <Sparkles size={14} className="text-[#F34D83]" />
-              <span className="text-xs text-[#A5A5AD] uppercase tracking-widest">Kima Unboxing</span>
+              <span className="text-xs uppercase tracking-widest font-semibold">Kima Unboxing</span>
             </motion.div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-tight mb-6">
-              {t('buildYourBox').split(' ').map((word, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + i * 0.1 }}
-                  className={`inline-block mr-3 ${
-                    i === t('buildYourBox').split(' ').length - 1
-                      ? 'bg-gradient-to-r from-[#F34D83] to-[#D92968] bg-clip-text text-transparent'
-                      : ''
-                  }`}
-                >
-                  {word}
-                </motion.span>
-              ))}
+            <h1
+              className={`text-4xl sm:text-5xl lg:text-7xl font-black leading-tight mb-6 transition-colors duration-300 ${
+                isDark ? 'text-white' : 'text-gray-950'
+              }`}
+            >
+              {t('buildYourBox')
+                .split(' ')
+                .map((word, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + i * 0.1 }}
+                    className={`inline-block mr-3 ${
+                      i === t('buildYourBox').split(' ').length - 1
+                        ? 'bg-gradient-to-r from-[#F34D83] to-[#D92968] bg-clip-text text-transparent'
+                        : ''
+                    }`}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
             </h1>
 
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="text-[#A5A5AD] text-base sm:text-lg max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed"
+              className={`text-base sm:text-lg max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed transition-colors duration-300 ${
+                isDark ? 'text-[#A5A5AD]' : 'text-gray-600'
+              }`}
             >
               {t('heroSubtitle')}
             </motion.p>
@@ -86,7 +111,11 @@ export default function Hero() {
               </a>
               <a
                 href="#shop"
-                className="px-8 py-4 border border-white/20 text-white rounded-full font-bold text-sm uppercase tracking-wider hover:bg-white/5 transition-all duration-300 hover:border-[#F34D83]/50 text-center"
+                className={`px-8 py-4 rounded-full font-bold text-sm uppercase tracking-wider transition-all duration-300 hover:border-[#F34D83]/50 text-center border ${
+                  isDark
+                    ? 'border-white/20 text-white hover:bg-white/5'
+                    : 'border-gray-300 text-gray-800 hover:bg-gray-100 hover:text-black'
+                }`}
               >
                 {t('exploreProducts')}
               </a>
@@ -111,9 +140,19 @@ export default function Hero() {
             >
               <div className="w-48 h-48 sm:w-56 sm:h-56 relative">
                 {/* Box base */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#F34D83] to-[#D92968] rounded-2xl shadow-2xl shadow-[#F34D83]/20 transform rotate-3" />
-                <div className="absolute inset-2 bg-gradient-to-br from-[#F8EDEB] to-[#f0d8d4] rounded-xl flex items-center justify-center">
-                  <img src="/LG-rosee.rose.webp" alt="Kima" className="w-24 h-24 object-contain opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#F34D83] to-[#D92968] rounded-2xl shadow-2xl shadow-[#F34D83]/25 transform rotate-3" />
+                <div
+                  className={`absolute inset-2 rounded-xl flex items-center justify-center transition-colors ${
+                    isDark
+                      ? 'bg-gradient-to-br from-[#F8EDEB] to-[#f0d8d4]'
+                      : 'bg-gradient-to-br from-[#FFFFFF] to-[#F8EDEB]'
+                  }`}
+                >
+                  <img
+                    src="/LG-rosee.rose.webp"
+                    alt="Kima"
+                    className="w-24 h-24 object-contain opacity-75"
+                  />
                 </div>
                 {/* Box lid */}
                 <motion.div
@@ -143,7 +182,11 @@ export default function Hero() {
                 }}
               >
                 <div
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-2 shadow-xl"
+                  className={`backdrop-blur-sm rounded-2xl p-2 transition-colors duration-300 border ${
+                    isDark
+                      ? 'bg-white/5 border-white/10 shadow-xl'
+                      : 'bg-white/95 border-gray-200 shadow-xl'
+                  }`}
                   style={{ width: p.size, height: p.size }}
                 >
                   <img
@@ -165,7 +208,7 @@ export default function Hero() {
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <ArrowDown className="text-[#A5A5AD]" size={20} />
+        <ArrowDown className={isDark ? 'text-[#A5A5AD]' : 'text-gray-400'} size={20} />
       </motion.div>
     </section>
   );

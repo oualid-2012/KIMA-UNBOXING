@@ -60,6 +60,9 @@ const translations = {
     customerInfo: 'Informations client',
     itemsInBox: 'articles dans la box',
     dropHere: 'Déposez ici !',
+    darkMode: 'Mode Sombre',
+    lightMode: 'Mode Blanc',
+    switchTheme: 'Changer de mode',
   },
   ar: {
     buildYourBox: 'صمّم صندوقك',
@@ -120,6 +123,9 @@ const translations = {
     customerInfo: 'معلومات العميل',
     itemsInBox: 'عناصر في الصندوق',
     dropHere: 'أفلت هنا!',
+    darkMode: 'الوضع الداكن',
+    lightMode: 'الوضع الفاتح',
+    switchTheme: 'تغيير المظهر',
   },
 };
 

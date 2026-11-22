@@ -11,10 +11,11 @@ interface Props {
 }
 
 export default function ProductCard({ product }: Props) {
-  const { addItem, isBoxFull, items } = useBoxStore();
+  const { addItem, isBoxFull, items, theme } = useBoxStore();
   const { t, language } = useTranslation();
   const [justAdded, setJustAdded] = useState(false);
   const inBox = items.some((i) => i.product.id === product.id);
+  const isDark = theme === 'dark';
 
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: product.id,
@@ -48,26 +49,40 @@ export default function ProductCard({ product }: Props) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       whileHover={{ y: -4 }}
-      className="group relative bg-[#18191F] rounded-2xl overflow-hidden border border-white/5 hover:border-[#F34D83]/30 transition-all duration-300 cursor-grab active:cursor-grabbing"
+      className={`group relative rounded-2xl overflow-hidden border transition-all duration-300 cursor-grab active:cursor-grabbing ${
+        isDark
+          ? 'bg-[#18191F] border-white/5 hover:border-[#F34D83]/30'
+          : 'bg-white border-gray-200/90 hover:border-[#F34D83]/40 shadow-xs hover:shadow-lg'
+      }`}
     >
       {/* Image */}
-      <div className="relative aspect-square bg-gradient-to-b from-[#1e1f26] to-[#18191F] p-4 sm:p-6 flex items-center justify-center overflow-hidden">
+      <div
+        className={`relative aspect-square p-4 sm:p-6 flex items-center justify-center overflow-hidden transition-colors ${
+          isDark
+            ? 'bg-gradient-to-b from-[#1e1f26] to-[#18191F]'
+            : 'bg-gradient-to-b from-[#FFF5F7] to-[#FAF9F6]'
+        }`}
+      >
         <motion.img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-contain drop-shadow-xl"
+          className="w-full h-full object-contain drop-shadow-md"
           loading="lazy"
           whileHover={{ scale: 1.08 }}
           transition={{ duration: 0.3 }}
         />
 
         {/* Category badge */}
-        <span className="absolute top-3 left-3 bg-white/10 backdrop-blur-sm text-[10px] text-[#A5A5AD] px-2.5 py-1 rounded-full uppercase tracking-wider">
+        <span
+          className={`absolute top-3 left-3 backdrop-blur-sm text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold ${
+            isDark ? 'bg-white/10 text-[#A5A5AD]' : 'bg-black/5 text-gray-700'
+          }`}
+        >
           {product.category}
         </span>
 
         {inBox && (
-          <div className="absolute top-3 right-3 bg-[#F34D83] text-white p-1.5 rounded-full">
+          <div className="absolute top-3 right-3 bg-[#F34D83] text-white p-1.5 rounded-full shadow-xs">
             <Package size={12} />
           </div>
         )}
@@ -75,13 +90,20 @@ export default function ProductCard({ product }: Props) {
 
       {/* Info */}
       <div className="p-3 sm:p-4 space-y-2 sm:space-y-3">
-        <h3 className="text-white font-semibold text-xs sm:text-sm leading-tight line-clamp-2">
+        <h3
+          className={`font-semibold text-xs sm:text-sm leading-tight line-clamp-2 transition-colors ${
+            isDark ? 'text-white' : 'text-gray-900'
+          }`}
+        >
           {language === 'ar' ? product.nameAr : product.name}
         </h3>
 
         <div className="flex items-center justify-between gap-2">
           <span className="text-[#F34D83] font-bold text-sm sm:text-lg">
-            {product.price} <span className="text-[10px] sm:text-xs font-normal text-[#A5A5AD]">{t('mad')}</span>
+            {product.price}{' '}
+            <span className={`text-[10px] sm:text-xs font-normal ${isDark ? 'text-[#A5A5AD]' : 'text-gray-500'}`}>
+              {t('mad')}
+            </span>
           </span>
 
           <motion.button
@@ -96,7 +118,9 @@ export default function ProductCard({ product }: Props) {
               justAdded
                 ? 'bg-green-500 text-white'
                 : isBoxFull() && !inBox
-                ? 'bg-white/5 text-[#A5A5AD] cursor-not-allowed'
+                ? isDark
+                  ? 'bg-white/5 text-[#A5A5AD] cursor-not-allowed'
+                  : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                 : 'bg-gradient-to-r from-[#F34D83] to-[#D92968] text-white hover:shadow-lg hover:shadow-[#F34D83]/20'
             }`}
           >

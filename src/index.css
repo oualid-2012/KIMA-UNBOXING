@@ -11,11 +11,11 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #101114;
+  background: var(--bg-scroll-track, #101114);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2a2b33;
+  background: var(--bg-scroll-thumb, #2a2b33);
   border-radius: 3px;
 }
 
@@ -43,9 +43,18 @@ canvas {
   user-select: none;
 }
 
-/* Font */
+/* Font and theme variables */
+:root {
+  --bg-scroll-track: #F1F2F6;
+  --bg-scroll-thumb: #D5D7E2;
+}
+
+html.dark, [data-theme="dark"] {
+  --bg-scroll-track: #101114;
+  --bg-scroll-thumb: #2a2b33;
+}
+
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: #101114;
-  color: #ffffff;
+  transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
