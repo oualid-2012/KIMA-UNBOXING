@@ -19,7 +19,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <img
-              src={isDark ? '/LG-rosee.rose.webp' : '/LG-Black.rose.webp'}
+              src={isDark ? '/asset/LG-rosee.rose.svg' : '/asset/LG-whait.rose.svg'}
               alt="Kima Unboxing"
               className="h-12 mb-4 object-contain transition-opacity duration-300"
             />

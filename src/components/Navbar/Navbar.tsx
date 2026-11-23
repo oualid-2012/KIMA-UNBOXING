@@ -32,7 +32,7 @@ export default function Navbar() {
           {/* Logo */}
           <a href="#home" className="flex items-center gap-2 shrink-0">
             <img
-              src={isDark ? '/LG-rosee.rose.webp' : '/LG-Black.rose.webp'}
+              src={isDark ? '/asset/LG-rosee.rose.svg' : '/asset/LG-whait.rose.svg'}
               alt="Kima"
               className="h-10 md:h-12 object-contain transition-opacity duration-300"
             />

@@ -149,7 +149,7 @@ export default function Hero() {
                   }`}
                 >
                   <img
-                    src={isDark ? '/LG-rosee.rose.webp' : '/LG-Black.rose.webp'}
+                    src={isDark ? '/asset/LG-rosee.rose.svg' : '/asset/LG-whait.rose.svg'}
                     alt="Kima"
                     className="w-24 h-24 sm:w-28 sm:h-28 object-contain drop-shadow-md"
                   />
