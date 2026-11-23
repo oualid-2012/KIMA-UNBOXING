@@ -2,7 +2,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Minus, Plus, Trash2, ShoppingBag, ArrowRight, Package } from 'lucide-react';
 import { useBoxStore } from '../../store/boxStore';
 import { useTranslation } from '../../hooks/useTranslation';
-import BoxCapacityBar from '../UI/BoxCapacityBar';
 
 export default function MyBox() {
   const {
@@ -71,14 +70,6 @@ export default function MyBox() {
               >
                 <X size={20} />
               </button>
-            </div>
-
-            {/* Capacity bar */}
-            <div
-              className={`px-5 py-3 border-b transition-colors ${isDark ? 'border-white/5' : 'border-gray-100'
-                }`}
-            >
-              <BoxCapacityBar />
             </div>
 
             {/* Items */}

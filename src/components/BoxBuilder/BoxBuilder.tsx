@@ -2,7 +2,6 @@ import { useBoxStore } from '../../store/boxStore';
 import { useTranslation } from '../../hooks/useTranslation';
 import ProductGrid from '../ProductGrid/ProductGrid';
 import Categories from '../Categories/Categories';
-import BoxCapacityBar from '../UI/BoxCapacityBar';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Sparkles } from 'lucide-react';
 
@@ -57,30 +56,30 @@ export default function BoxBuilder() {
           </p>
         </motion.div>
 
-        {/* Capacity status banner & summary (appears when products are in box) */}
+        {/* Box summary (appears when products are in box) */}
         {count > 0 && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`max-w-xl mx-auto mb-8 p-4 rounded-2xl border transition-colors ${
+            className={`max-w-xl mx-auto mb-8 p-3.5 sm:p-4 rounded-2xl border transition-colors flex items-center justify-between ${
               isDark
                 ? 'bg-[#18191F] border-white/5'
                 : 'bg-white border-gray-200/90 shadow-md'
             }`}
           >
-            <BoxCapacityBar />
-            <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/5 dark:border-white/5 border-gray-100">
-              <span className={`text-xs font-medium ${isDark ? 'text-[#A5A5AD]' : 'text-gray-600'}`}>
+            <div className="flex items-center gap-2">
+              <span className="text-lg">🛍️</span>
+              <span className={`text-xs sm:text-sm font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 {count} {t('itemsInBox')} • <span className="text-[#F34D83] font-bold">{totalPrice()} {t('mad')}</span>
               </span>
-              <button
-                onClick={toggleBox}
-                className="text-xs font-bold text-[#F34D83] hover:underline flex items-center gap-1 transition-all"
-              >
-                <ShoppingBag size={13} />
-                <span>{t('myBox')} →</span>
-              </button>
             </div>
+            <button
+              onClick={toggleBox}
+              className="text-xs font-bold text-white bg-gradient-to-r from-[#F34D83] to-[#D92968] px-4 py-2 rounded-full hover:shadow-md hover:shadow-[#F34D83]/20 flex items-center gap-1.5 transition-all"
+            >
+              <ShoppingBag size={14} />
+              <span>{t('myBox')} →</span>
+            </button>
           </motion.div>
         )}
 
