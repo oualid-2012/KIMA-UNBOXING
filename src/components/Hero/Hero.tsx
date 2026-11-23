@@ -132,35 +132,31 @@ export default function Hero() {
             {/* Glow behind box */}
             <div className="absolute w-64 h-64 bg-[#F34D83]/20 rounded-full blur-[80px]" />
 
-            {/* Central box icon */}
+            {/* Central luxury emblem */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               className="relative z-10"
             >
-              <div className="w-48 h-48 sm:w-56 sm:h-56 relative">
-                {/* Box base */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#F34D83] to-[#D92968] rounded-2xl shadow-2xl shadow-[#F34D83]/25 transform rotate-3" />
+              <div className="w-48 h-48 sm:w-56 sm:h-56 relative flex items-center justify-center">
+                {/* Glowing border ring */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#F34D83] to-[#D92968] rounded-3xl shadow-2xl shadow-[#F34D83]/30 rotate-6" />
                 <div
-                  className={`absolute inset-2 rounded-xl flex items-center justify-center transition-colors ${
+                  className={`absolute inset-1.5 rounded-2xl flex flex-col items-center justify-center p-6 transition-colors border ${
                     isDark
-                      ? 'bg-gradient-to-br from-[#F8EDEB] to-[#f0d8d4]'
-                      : 'bg-gradient-to-br from-[#FFFFFF] to-[#F8EDEB]'
+                      ? 'bg-[#18191F] border-white/10'
+                      : 'bg-white border-pink-100 shadow-xl'
                   }`}
                 >
                   <img
-                    src="/LG-rosee.rose.webp"
+                    src={isDark ? '/LG-rosee.rose.webp' : '/LG-Black.rose.webp'}
                     alt="Kima"
-                    className="w-24 h-24 object-contain opacity-75"
+                    className="w-24 h-24 sm:w-28 sm:h-28 object-contain drop-shadow-md"
                   />
+                  <span className="text-[10px] tracking-widest font-black uppercase text-[#F34D83] mt-1">
+                    Kima Unboxing
+                  </span>
                 </div>
-                {/* Box lid */}
-                <motion.div
-                  animate={{ rotateX: [-5, 5, -5] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute -top-6 left-0 right-0 h-10 bg-gradient-to-r from-[#F34D83] to-[#D92968] rounded-t-xl origin-bottom"
-                  style={{ transformStyle: 'preserve-3d' }}
-                />
               </div>
             </motion.div>
 

@@ -18,7 +18,7 @@ export default function ProductGrid() {
     <div dir={isRtl ? 'rtl' : 'ltr'}>
       <motion.div
         layout
-        className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5"
+        className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
       >
         {filtered.map((product) => (
           <ProductCard key={product.id} product={product} />
