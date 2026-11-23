@@ -15,6 +15,7 @@ import {
 import { useBoxStore } from '../../store/boxStore';
 import { useTranslation } from '../../hooks/useTranslation';
 import { sendOrderToGoogleSheet } from '../../services/googleSheetService';
+import { isCasablanca } from '../../data/products';
 
 export default function Checkout() {
   const {
@@ -234,9 +235,48 @@ export default function Checkout() {
                   </div>
 
                   <div>
-                    <label className={`block text-xs mb-1.5 font-medium ${isDark ? 'text-[#A5A5AD]' : 'text-gray-600'}`}>
-                      {t('city')}
-                    </label>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className={`block text-xs font-medium ${isDark ? 'text-[#A5A5AD]' : 'text-gray-600'}`}>
+                        {t('city')}
+                      </label>
+                      <span className="text-[11px] font-semibold text-[#F34D83]">
+                        {isCasablanca(checkoutForm.city) ? 'Casablanca: 20 DH' : 'Hors Casablanca: 35 DH'}
+                      </span>
+                    </div>
+
+                    {/* Quick City Selector Chips */}
+                    <div className="flex flex-wrap gap-1.5 mb-2">
+                      <button
+                        type="button"
+                        onClick={() => setCheckoutForm({ city: 'Casablanca' })}
+                        className={`text-xs px-2.5 py-1 rounded-full font-medium transition-all ${
+                          isCasablanca(checkoutForm.city)
+                            ? 'bg-gradient-to-r from-[#F34D83] to-[#D92968] text-white shadow-xs'
+                            : isDark
+                            ? 'bg-white/5 text-[#A5A5AD] hover:text-white border border-white/5'
+                            : 'bg-gray-100 text-gray-700 hover:text-black border border-gray-200'
+                        }`}
+                      >
+                        🏙️ Casablanca (20 DH)
+                      </button>
+                      {['Rabat', 'Marrakech', 'Tanger', 'Agadir', 'Fès'].map((cityName) => (
+                        <button
+                          key={cityName}
+                          type="button"
+                          onClick={() => setCheckoutForm({ city: cityName })}
+                          className={`text-xs px-2.5 py-1 rounded-full font-medium transition-all ${
+                            checkoutForm.city === cityName
+                              ? 'bg-gradient-to-r from-[#F34D83] to-[#D92968] text-white shadow-xs'
+                              : isDark
+                              ? 'bg-white/5 text-[#A5A5AD] hover:text-white border border-white/5'
+                              : 'bg-gray-100 text-gray-700 hover:text-black border border-gray-200'
+                          }`}
+                        >
+                          {cityName} (35 DH)
+                        </button>
+                      ))}
+                    </div>
+
                     <input
                       type="text"
                       value={checkoutForm.city}
@@ -246,7 +286,7 @@ export default function Checkout() {
                           ? 'bg-white/5 border-white/10 text-white placeholder-gray-500'
                           : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-400'
                       }`}
-                      placeholder={language === 'ar' ? 'المدينة' : 'Casablanca, Rabat...'}
+                      placeholder={language === 'ar' ? 'المدينة (كازا 20 درهم / خارج كازا 35 درهم)' : 'Ex: Casablanca, Rabat, Marrakech...'}
                     />
                   </div>
 
@@ -374,10 +414,19 @@ export default function Checkout() {
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className={`flex items-center gap-1 ${isDark ? 'text-[#A5A5AD]' : 'text-gray-600'}`}>
-                      <Truck size={14} /> {t('delivery')}
+                    <span className={`flex items-center gap-1.5 ${isDark ? 'text-[#A5A5AD]' : 'text-gray-600'}`}>
+                      <Truck size={14} className="text-[#F34D83]" />
+                      <span>
+                        {isCasablanca(checkoutForm.city)
+                          ? language === 'ar'
+                            ? 'التوصيل (الدار البيضاء)'
+                            : 'Livraison (Casablanca)'
+                          : language === 'ar'
+                          ? `التوصيل (خارج كازا - ${checkoutForm.city || 'باقي المدن'})`
+                          : `Livraison (Hors Casablanca - ${checkoutForm.city || 'Autre ville'})`}
+                      </span>
                     </span>
-                    <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    <span className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       {summary.deliveryFee} {t('mad')}
                     </span>
                   </div>

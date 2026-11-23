@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { BoxItem, Product, Language, CheckoutFormData, Theme } from '../types';
-import { BOX_MAX_CAPACITY, DELIVERY_FEE } from '../data/products';
+import { BOX_MAX_CAPACITY, DELIVERY_FEE, getDeliveryFee } from '../data/products';
 
 interface BoxStore {
   // Box items
@@ -69,10 +69,12 @@ export const useBoxStore = create<BoxStore>()(
       isBoxFull: () => get().totalVolume() >= BOX_MAX_CAPACITY,
       orderSummary: () => {
         const subtotal = get().totalPrice();
+        const city = get().checkoutForm.city;
+        const deliveryFee = getDeliveryFee(city);
         return {
           subtotal,
-          deliveryFee: DELIVERY_FEE,
-          total: subtotal + DELIVERY_FEE,
+          deliveryFee,
+          total: subtotal + deliveryFee,
         };
       },
 

@@ -206,4 +206,29 @@ export const products: Product[] = [
 ];
 
 export const BOX_MAX_CAPACITY = 20;
-export const DELIVERY_FEE = 39;
+
+// Frais de livraison : Casablanca 20 DH, Hors Casablanca 35 DH
+export const DELIVERY_CASA = 20;
+export const DELIVERY_HORS_CASA = 35;
+export const DELIVERY_FEE = DELIVERY_CASA;
+
+export function isCasablanca(city?: string): boolean {
+  if (!city) return false;
+  const clean = city.trim().toLowerCase();
+  return (
+    clean === 'casablanca' ||
+    clean === 'casa' ||
+    clean === 'dar beida' ||
+    clean === 'dar bayda' ||
+    clean === 'dar baida' ||
+    clean.includes('casablanca') ||
+    clean.includes('بيضاء')
+  );
+}
+
+export function getDeliveryFee(city?: string): number {
+  if (!city || !city.trim()) {
+    return DELIVERY_CASA; // Valeur par défaut
+  }
+  return isCasablanca(city) ? DELIVERY_CASA : DELIVERY_HORS_CASA;
+}

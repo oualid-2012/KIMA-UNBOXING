@@ -22,7 +22,7 @@ KIMA UNBOXING is a Moroccan luxury unboxing brand combining luxury branding, gam
   - Persistent box state powered by Zustand with `localStorage` sync
 - **💳 Seamless Checkout Flow**
   - Two-step checkout: Customer information (Name, Phone, City, Delivery Address, Notes) and detailed Order Review
-  - Transparent pricing breakdown: Subtotal + Moroccan standard delivery (39 MAD) = Total
+  - Transparent pricing breakdown: Subtotal + Moroccan delivery (20 DH Casablanca / 35 DH Hors Casablanca) = Total
 - **🌍 Bilingual Support (i18n)**
   - Instant language toggle between **French (Français)** and **Arabic (العربية)** with automatic RTL direction handling
 - **💎 Luxury Visual Brand Language**
