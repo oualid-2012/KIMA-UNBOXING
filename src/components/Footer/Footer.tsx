@@ -34,7 +34,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/kima.unboxing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`w-10 h-10 rounded-full border flex items-center justify-center hover:text-[#F34D83] hover:border-[#F34D83]/30 transition-all duration-300 ${
