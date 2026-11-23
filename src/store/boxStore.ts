@@ -65,8 +65,8 @@ export const useBoxStore = create<BoxStore>()(
         get().items.reduce((sum, item) => sum + item.product.volume * item.quantity, 0),
       totalPrice: () =>
         get().items.reduce((sum, item) => sum + item.product.price * item.quantity, 0),
-      capacityPercentage: () => Math.min((get().totalVolume() / BOX_MAX_CAPACITY) * 100, 100),
-      isBoxFull: () => get().totalVolume() >= BOX_MAX_CAPACITY,
+      capacityPercentage: () => 0,
+      isBoxFull: () => false,
       orderSummary: () => {
         const subtotal = get().totalPrice();
         const city = get().checkoutForm.city;
@@ -80,11 +80,7 @@ export const useBoxStore = create<BoxStore>()(
 
       addItem: (product: Product) => {
         const state = get();
-        const currentVolume = state.totalVolume();
-        if (currentVolume + product.volume > BOX_MAX_CAPACITY) {
-          return false;
-        }
-
+        // Unlimited box capacity
         const existing = state.items.find((item) => item.product.id === product.id);
         if (existing) {
           set({

@@ -1,48 +1,31 @@
-import { motion } from 'framer-motion';
 import { useBoxStore } from '../../store/boxStore';
 import { useTranslation } from '../../hooks/useTranslation';
 
 export default function BoxCapacityBar() {
-  const { capacityPercentage, theme } = useBoxStore();
-  const { t } = useTranslation();
-  const pct = capacityPercentage();
+  const { totalItems, theme } = useBoxStore();
+  const { t, language } = useTranslation();
+  const count = totalItems();
   const isDark = theme === 'dark';
-
-  const getLabel = () => {
-    if (pct === 0) return t('empty');
-    if (pct <= 25) return t('gettingStarted');
-    if (pct <= 50) return t('halfFull');
-    if (pct <= 75) return t('almostFull');
-    return t('full');
-  };
-
-  const getColor = () => {
-    if (pct <= 25) return 'from-[#F34D83] to-[#F34D83]';
-    if (pct <= 50) return 'from-[#F34D83] to-[#D92968]';
-    if (pct <= 75) return 'from-[#D92968] to-[#c41e56]';
-    return 'from-[#D92968] to-[#a0153e]';
-  };
+  const isAr = language === 'ar';
 
   return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between text-xs">
-        <span className={`transition-colors font-medium ${isDark ? 'text-[#A5A5AD]' : 'text-gray-600'}`}>
+    <div className="flex items-center justify-between text-xs py-0.5">
+      <div className="flex items-center gap-1.5">
+        <span className="text-sm">📦</span>
+        <span className={`font-semibold transition-colors ${isDark ? 'text-white' : 'text-gray-900'}`}>
           {t('boxCapacity')}
         </span>
-        <span className={`font-bold transition-colors ${isDark ? 'text-white' : 'text-gray-950'}`}>
-          {getLabel()} — {Math.round(pct)}%
-        </span>
       </div>
-      <div
-        className={`h-2.5 rounded-full overflow-hidden transition-colors ${isDark ? 'bg-white/10' : 'bg-gray-200'
-          }`}
-      >
-        <motion.div
-          className={`h-full rounded-full bg-gradient-to-r ${getColor()}`}
-          initial={{ width: 0 }}
-          animate={{ width: `${pct}%` }}
-          transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-        />
+      <div className="flex items-center gap-2">
+        {count > 0 && (
+          <span className={`text-[11px] font-medium transition-colors ${isDark ? 'text-[#A5A5AD]' : 'text-gray-500'}`}>
+            {count} {t('products')}
+          </span>
+        )}
+        <span className="font-bold text-[#F34D83] flex items-center gap-1 bg-[#F34D83]/10 border border-[#F34D83]/20 px-2.5 py-0.5 rounded-full text-xs">
+          <span>✨</span>
+          <span>{isAr ? 'غير محدودة (∞)' : 'Illimitée (∞)'}</span>
+        </span>
       </div>
     </div>
   );

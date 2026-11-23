@@ -7,11 +7,11 @@ import Footer from './components/Footer/Footer';
 import MyBox from './components/MyBox/MyBox';
 import Checkout from './components/Checkout/Checkout';
 import { useBoxStore } from './store/boxStore';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ShoppingBag } from 'lucide-react';
 
 export default function App() {
-  const { toggleBox, totalItems, isBoxFull, theme } = useBoxStore();
+  const { toggleBox, totalItems, theme } = useBoxStore();
   const count = totalItems();
   const isDark = theme === 'dark';
 
@@ -54,20 +54,6 @@ export default function App() {
           )}
         </motion.button>
       </div>
-
-      {/* Box full toast */}
-      <AnimatePresence>
-        {isBoxFull() && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-[#D92968] text-white px-6 py-3 rounded-full text-sm font-semibold shadow-xl whitespace-nowrap"
-          >
-            🎁 Votre Box est pleine !
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

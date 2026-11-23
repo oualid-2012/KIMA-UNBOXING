@@ -10,14 +10,13 @@ interface Props {
 }
 
 export default function ProductCard({ product }: Props) {
-  const { addItem, isBoxFull, items, theme } = useBoxStore();
+  const { addItem, items, theme } = useBoxStore();
   const { t, language } = useTranslation();
   const [justAdded, setJustAdded] = useState(false);
   const inBox = items.some((i) => i.product.id === product.id);
   const isDark = theme === 'dark';
 
   const handleAdd = () => {
-    if (isBoxFull()) return;
     const success = addItem(product);
     if (success) {
       setJustAdded(true);
@@ -90,14 +89,9 @@ export default function ProductCard({ product }: Props) {
           <motion.button
             whileTap={{ scale: 0.92 }}
             onClick={handleAdd}
-            disabled={isBoxFull() && !inBox}
             className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-bold transition-all duration-300 ${
               justAdded
                 ? 'bg-emerald-500 text-white'
-                : isBoxFull() && !inBox
-                ? isDark
-                  ? 'bg-white/5 text-[#A5A5AD] cursor-not-allowed'
-                  : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                 : 'bg-gradient-to-r from-[#F34D83] to-[#D92968] text-white hover:shadow-md hover:shadow-[#F34D83]/25'
             }`}
           >
