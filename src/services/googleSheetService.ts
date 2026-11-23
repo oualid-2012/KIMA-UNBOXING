@@ -1,5 +1,5 @@
 export const GOOGLE_SCRIPT_URL =
-  'https://script.google.com/macros/s/AKfycbxQUlrRY6GvS04KGCt3cYTwgb90x5GHk2p0MdbncdmkidPtFHIQFyr4miFpzuIc6x3-aQ/exec';
+  'https://script.google.com/macros/s/AKfycbyGDoJCjtz_pwjwpYJ4jdAuGKKyO9c3cdav_y_vmwdAINozWQWpYykRdZjUROe8g65h4w/exec';
 
 export interface OrderData {
   date: string;
